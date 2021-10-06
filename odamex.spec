@@ -3,7 +3,7 @@
 %global     commit 22ebdc2b52e0c8cd4c4445eb38cb2a0f24584aa1
 
 Name:       odamex
-Version:    0.8.3
+Version:    0.8.5
 Release:    1%{?dist}
 
 Summary:    Online Multiplayer Doom port with a strong focus on the original gameplay while providing a breadth of enhancements. 
@@ -57,6 +57,9 @@ FCFLAGS=$OPT_FLAGS \
 %{_datadir}/%{name}
 
 %changelog
+* Wed Oct 06 2021 Jan Drögehoff <sentrycraft123@gmail.com> - 0.8.5-1
+- Update to 0.8.5
+
 * Fri Jan 15 18:14:12 CET 2021 Jan Drögehoff <sentrycraft123@gmail.com> - 0.8.3-1
 - Initial spec
 
