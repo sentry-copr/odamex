@@ -1,37 +1,42 @@
 
 Name:         odamex
-Version:      10.0.0
+Version:      10.3.0
 Release:      1%{?dist}
 
 Summary:      Online Multiplayer Doom port with a strong focus on the original gameplay while providing a breadth of enhancements.
 License:      GPLv2 and MIT and LGPLv2+ with exceptions and zlib and BSD and GPLv2+
 URL:          https://odamex.net/
-Source0:      https://nav.dl.sourceforge.net/project/odamex/Odamex/%{version}/odamex-src-%{version}.tar.gz
-Patch0:       0001-Merge-pull-request-626-from-chewi-master-std.patch
+Source0:      https://github.com/odamex/odamex/releases/download/%{version}/odamex-src-%{version}.tar.gz
+Patch0:       time.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: alsa-lib-devel
 BuildRequires: libcurl-devel
 BuildRequires: libpng-devel
 BuildRequires: zlib-devel
-BuildRequires: wxGTK3-devel
+BuildRequires: (wxGTK-devel or wxGTK3-devel)
 BuildRequires: deutex
 BuildRequires: SDL2-devel SDL2_mixer-devel
-BuildRequires: deutex
+BuildRequires: portmidi-devel
+BuildRequires: miniupnpc-devel
+
+# The Launcher needs the client to function
+Requires:      %{name}-client
 
 # MIT
 # not used but provided in the release tarball
-Provides:     bundled(libcurl) = 7.71.1
+Provides:     bundled(libcurl)
 # LGPLv2+ with exceptions
 Provides:     bundled(fltk)
 # MIT
 Provides:     bundled(jsoncpp)
 # MIT
-Provides:     bundled(libminiupnpc) = 1.9.20140401
+Provides:     bundled(libminiupnpc)
 # zlib
 # not used but provided in the release tarball
-Provides:     bundled(libpng) = 1.6.37
+Provides:     bundled(libpng)
 # MIT
+# not used but provided in the release tarball
 Provides:     bundled(portmidi)
 # BSD
 Provides:     bundled(protobuf)
@@ -39,7 +44,7 @@ Provides:     bundled(protobuf)
 Provides:     bundled(textscreen)
 # zlib
 # not used but provided in the release tarball
-Provides:     bundled(zlib) = 1.2.11
+Provides:     bundled(zlib)
 
 %description
 Odamex is a modification of DOOM to allow players to compete with each
@@ -54,16 +59,53 @@ Odamex is based on the CSDoom 0.62 source code originally created by
 Sergey Makovkin, which is based on the ZDoom 1.22 source code created
 by Marisa Heit.
 
+%package client
+Summary:    Odamex Client
+Requires:   %{name}-data
+
+%description client
+Odamex Client
+
+%package server
+Summary:    Odamex Server
+Requires:   %{name}-data
+
+%description server
+Odamex Server
+
+%package masterserver
+Summary:    Odamex Master Server
+Requires:   %{name}-data
+
+%description masterserver
+Odamex Master Server
+
+%package data
+Summary:    Odamex Data
+BuildArch:  noarch
+
+%description data
+Odamex Data
+
 %prep
 %autosetup -n odamex-src-%{version} -p1
 
 %build
-
-%cmake -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo\
-       -DBUILD_CLIENT=1 \
-       -DBUILD_SERVER=1 \
-       -DBUILD_MASTER=1 \
-       -DBUILD_ODALAUNCH=1
+%cmake \
+    -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+    -DUSE_INTERNAL_DEUTEX=0 \
+    -DUSE_INTERNAL_ZLIB=0 \
+    -DUSE_INTERNAL_PNG=0 \
+    -DUSE_INTERNAL_CURL=0 \
+    -DUSE_INTERNAL_JSONCPP=0 \
+    -DUSE_INTERNAL_WXWIDGETS=0 \
+    -DUSE_INTERNAL_MINIUPNP=0 \
+    -DENABLE_PORTMIDI=1 \
+    -DUSE_MINIUPNP=1 \
+    -DBUILD_CLIENT=1 \
+    -DBUILD_SERVER=1 \
+    -DBUILD_MASTER=1 \
+    -DBUILD_ODALAUNCH=1
 
 %cmake_build
 
@@ -72,12 +114,23 @@ by Marisa Heit.
 
 %files
 %{_bindir}/odalaunch
-%{_bindir}/odamast
+
+%files client
 %{_bindir}/odamex
+
+%files server
 %{_bindir}/odasrv
+
+%files masterserver
+%{_bindir}/odamast
+
+%files data
 %{_datadir}/%{name}
 
 %changelog
+* Wed Apr 19 2023 Jan Drögehoff <sentrycraft123@gmail.com> - 10.3.0-1
+- Update to 10.3.0
+
 * Sat Mar 26 2022 Jan Drögehoff <sentrycraft123@gmail.com> - 10.0.0-1
 - Update to 10.0.0
 
