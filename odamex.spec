@@ -15,6 +15,7 @@ BuildRequires: libpng-devel
 BuildRequires: zlib-devel
 BuildRequires: (wxGTK-devel or wxGTK3-devel)
 BuildRequires: deutex
+BuildRequires: pkgconfig(jsoncpp)
 BuildRequires: SDL2-devel SDL2_mixer-devel
 BuildRequires: portmidi-devel
 BuildRequires: miniupnpc-devel
