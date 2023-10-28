@@ -1,13 +1,12 @@
 
 Name:         odamex
-Version:      10.3.0
+Version:      10.4.0
 Release:      1%{?dist}
 
 Summary:      Online Multiplayer Doom port with a strong focus on the original gameplay while providing a breadth of enhancements.
 License:      GPLv2 and MIT and LGPLv2+ with exceptions and zlib and BSD and GPLv2+
 URL:          https://odamex.net/
 Source0:      https://github.com/odamex/odamex/releases/download/%{version}/odamex-src-%{version}.tar.gz
-Patch0:       time.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: alsa-lib-devel
@@ -88,7 +87,7 @@ BuildArch:  noarch
 Odamex Data
 
 %prep
-%autosetup -n odamex-src-%{version} -p1
+%autosetup -n odamex-src-%{version}
 
 %build
 %cmake \
@@ -128,6 +127,9 @@ Odamex Data
 %{_datadir}/%{name}
 
 %changelog
+* Sat Oct 28 2023 Jan Drögehoff <sentrycraft123@gmail.com> - 10.4.0-1
+- Update to 10.4.0
+
 * Wed Apr 19 2023 Jan Drögehoff <sentrycraft123@gmail.com> - 10.3.0-1
 - Update to 10.3.0
 
