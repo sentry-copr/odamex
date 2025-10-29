@@ -1,6 +1,6 @@
 
 Name:         odamex
-Version:      10.5.0
+Version:      11.1.1
 Release:      1%{?dist}
 
 Summary:      Online Multiplayer Doom port with a strong focus on the original gameplay while providing a breadth of enhancements.
@@ -128,6 +128,9 @@ Odamex Data
 %{_datadir}/%{name}
 
 %changelog
+* Wed Oct 29 2025 Jan200101 <sentrycraft123@gmail.com> - 11.1.1-1
+- Update to 11.1.1
+
 * Sun Jul 14 2024 Jan200101 <sentrycraft123@gmail.com> - 10.5.0-1
 - Update to 10.5.0
 
