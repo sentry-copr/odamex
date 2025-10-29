@@ -19,6 +19,10 @@ BuildRequires: pkgconfig(jsoncpp)
 BuildRequires: SDL2-devel SDL2_mixer-devel
 BuildRequires: portmidi-devel
 BuildRequires: miniupnpc-devel
+# libzstd has no cmake configuration, fixed in rawhide
+BuildRequires: libzstd-devel
+# libdwarf has no cmake configuration because it uses meson
+BuildRequires: libdwarf-devel
 
 # The Launcher needs the client to function
 Requires:      %{name}-client
@@ -93,6 +97,7 @@ Odamex Data
 %build
 %cmake \
     -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+    -DUSE_EXTERNAL_LIBDWARF=1 \
     -DUSE_INTERNAL_DEUTEX=0 \
     -DUSE_INTERNAL_ZLIB=0 \
     -DUSE_INTERNAL_PNG=0 \
@@ -100,6 +105,7 @@ Odamex Data
     -DUSE_INTERNAL_JSONCPP=0 \
     -DUSE_INTERNAL_WXWIDGETS=0 \
     -DUSE_INTERNAL_MINIUPNP=0 \
+    -DUSE_INTERNAL_ZSTD=0 \
     -DENABLE_PORTMIDI=1 \
     -DUSE_MINIUPNP=1 \
     -DBUILD_CLIENT=1 \
