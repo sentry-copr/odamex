@@ -1,6 +1,6 @@
 
 Name:         odamex
-Version:      11.1.1
+Version:      12.2.0
 Release:      1%{?dist}
 
 Summary:      Online Multiplayer Doom port with a strong focus on the original gameplay while providing a breadth of enhancements.
@@ -22,7 +22,9 @@ BuildRequires: miniupnpc-devel
 # libzstd has no cmake configuration, fixed in rawhide
 BuildRequires: libzstd-devel
 # libdwarf has no cmake configuration because it uses meson
-BuildRequires: libdwarf-devel
+#BuildRequires: libdwarf-devel
+# needed to download deps
+BuildRequires: git
 
 # The Launcher needs the client to function
 Requires:      %{name}-client
@@ -49,6 +51,8 @@ Provides:     bundled(textscreen)
 # zlib
 # not used but provided in the release tarball
 Provides:     bundled(zlib)
+
+Provides:     bundled(libdwarf)
 
 %description
 Odamex is a modification of DOOM to allow players to compete with each
@@ -97,7 +101,7 @@ Odamex Data
 %build
 %cmake \
     -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-    -DUSE_EXTERNAL_LIBDWARF=1 \
+    -DUSE_EXTERNAL_LIBDWARF=0 \
     -DUSE_INTERNAL_DEUTEX=0 \
     -DUSE_INTERNAL_ZLIB=0 \
     -DUSE_INTERNAL_PNG=0 \
@@ -118,6 +122,10 @@ Odamex Data
 %install
 %cmake_install
 
+rm -rf \
+    %{buildroot}%{_includedir} \
+    %{buildroot}%{_libdir}
+
 %files
 %{_bindir}/odalaunch
 
@@ -134,6 +142,9 @@ Odamex Data
 %{_datadir}/%{name}
 
 %changelog
+* Tue May 05 2026 Jan200101 <sentrycraft123@gmail.com> - 12.2.0-1
+- Update to 12.2.0
+
 * Wed Oct 29 2025 Jan200101 <sentrycraft123@gmail.com> - 11.1.1-1
 - Update to 11.1.1
 
